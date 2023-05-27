@@ -49,40 +49,41 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    tID = 258,
-    tNB = 259,
-    tADD = 260,
-    tSUB = 261,
-    tMUL = 262,
-    tDIV = 263,
-    tLT = 264,
-    tGT = 265,
-    tNE = 266,
-    tEQ = 267,
-    tGE = 268,
-    tLE = 269,
-    tAND = 270,
-    tOR = 271,
-    tNOT = 272,
-    tLBRACE = 273,
-    tRBRACE = 274,
-    tLPAR = 275,
-    tRPAR = 276,
-    tSEMI = 277,
-    tCOMMA = 278,
-    tIF = 279,
-    tELSE = 280,
-    tELIF = 281,
-    tWHILE = 282,
-    tPRINT = 283,
-    tRETURN = 284,
-    tINT = 285,
-    tVOID = 286,
-    tASSIGN = 287,
-    tFOR = 288,
-    tCONST = 289,
-    tSTRING = 290,
-    tMAIN = 291
+    tADD = 258,
+    tSUB = 259,
+    tMUL = 260,
+    tDIV = 261,
+    tLT = 262,
+    tGT = 263,
+    tNE = 264,
+    tEQ = 265,
+    tGE = 266,
+    tLE = 267,
+    tAND = 268,
+    tOR = 269,
+    tNOT = 270,
+    tLBRACE = 271,
+    tRBRACE = 272,
+    tLPAR = 273,
+    tRPAR = 274,
+    tSEMI = 275,
+    tCOMMA = 276,
+    tIF = 277,
+    tELSE = 278,
+    tELIF = 279,
+    tWHILE = 280,
+    tPRINTF = 281,
+    tRETURN = 282,
+    tINT = 283,
+    tVOID = 284,
+    tASSIGN = 285,
+    tFOR = 286,
+    tCONST = 287,
+    tSTR = 288,
+    tMAIN = 289,
+    tERR = 290,
+    tNB = 291,
+    tID = 292
   };
 #endif
 
@@ -91,9 +92,9 @@ extern int yydebug;
 union YYSTYPE
 {
 #line 17 "parser.y"
-int nb; char *s;
+int nb; char varchar[16];
 
-#line 97 "parser.tab.h"
+#line 98 "parser.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

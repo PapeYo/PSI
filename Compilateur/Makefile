@@ -5,7 +5,7 @@ BIN = comp
 CC = gcc
 CFLAGS = -Wall -g
 
-OBJ = y.tab.o lex.yy.o instructions.o ts.o
+OBJ = y.tab.o lex.yy.o instruction.o ts.o
 
 all: $(BIN)
 

@@ -9,54 +9,50 @@
 %option nounput
 %option yylineno
 
-INTEGER             [0-9]+
-HEX_INT             "0x"[0-9A-F]+
-IDENTIFIERS         [a-zA-Z][a-z0-9]*
-OLC                 "//".*\n
-MLC_START           "/*"
-MLC_TXT             (.|\n)*
-MLC_END             "*/"
+IDENTIFIERS   [a-zA-Z]+[a-zA-Z0-9|_]*
+NUMBERS 	  [0-9]+(e[0-9]+)?
+OLC  		  \/\/.*\n?
+MLC           \/\*([^\*]|\*[^\/])*\*\/
+%%
+
+"if"          {return tIF;}
+"else if"     {return tELIF;}    
+"else"        {return tELSE;}
+"while"       {return tWHILE;}
+"for"         {return tFOR;}
+"printf"      {return tPRINTF;}
+"return"      {return tRETURN;}
+"int"         {return tINT;}
+"string"      {return tSTR;}
+"const"       {return tCONST;}
+"void"        {return tVOID;}
+"main"        {return tMAIN;}
+{NUMBERS}     {yylval.nb = (int) strtold(yytext, NULL); return tNB;}
+[ \t\n]+      {} /* Ignore whitespace characters */
+{OLC}         {} /* Ignore one-line comments */
+{MLC}         {} /* Ignore multi-line comments */ 
+"+"           {return tADD;}
+"-"           {return tSUB;}
+"*"           {return tMUL;}
+"/"           {return tDIV;}
+"<"           {return tLT;}
+">"           {return tGT;}
+"!="          {return tNE;}
+"=="          {return tEQ;}
+">="          {return tGE;}
+"<="          {return tLE;}
+"="           {return tASSIGN;}
+"&&"          {return tAND;}
+"||"          {return tOR;}
+"!"           {return tNOT;}
+"{"           {return tLBRACE;}
+"}"           {return tRBRACE;}
+"("           {return tLPAR;}
+")"           {return tRPAR;}
+";"           {return tSEMI;}
+","           {return tCOMMA;}
+{IDENTIFIERS} {strcpy(yylval.varchar, yytext); return tID;}
+.		      {return tERR;}
 
 %%
 
-"if"                            {return tIF;}
-"else if"                       {return tELIF;}
-"else"                          {return tELSE;}
-"while"                         {return tWHILE;}
-"for"                           {return tFOR;}
-"print"                         {return tPRINT;}
-"return"                        {return tRETURN;}
-"int"                           {return tINT;}
-"string"                        {return tSTRING;}
-"const"                         {return tCONST;}
-"void"                          {return tVOID;}
-"main"                          {return tMAIN;}
-{IDENTIFIERS}                   {return tID;}
-{INTEGER}                       {return tNB;}
-{HEX_INT}                       {return tNB;}
-[ \n]+                          { } /* ignores whitespaces and new lines */
-{OLC}                           { } /* ignores one line comment */
-{MLC_START}{MLC_TXT}{MLC_END}   { } /* ignores multi line comment */
-"+"                             {return tADD;}
-"-"                             {return tSUB;}
-"*"                             {return tMUL;}
-"/"                             {return tDIV;}
-"<"                             {return tLT;}
-">"                             {return tGT;}
-"!="                            {return tNE;}
-"=="                            {return tEQ;}
-">="                            {return tGE;}
-"<="                            {return tLE;}
-"="                             {return tASSIGN;}
-"&&"                            {return tAND;}
-"||"                            {return tOR;}
-"!"                             {return tNOT;}
-"{"                             {return tLBRACE;}
-"}"                             {return tRBRACE;}
-"("                             {return tLPAR;}
-")"                             {return tRPAR;}
-";"                             {return tSEMI;}
-","                             {return tCOMMA;}
-.                               { }
-
-%%
