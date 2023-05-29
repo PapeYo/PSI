@@ -11,7 +11,7 @@ instr* init_ti() {
 
 // adds a new instruction to the instruction table
 void add_instr(instr* tab, char* name, char * arg1, char * arg2, char * arg3) {
-    if (ti_size >= SIZE) printf("TAILLE MAXIMALE DEPASSEE\n");
+    if (ti_size >= SIZE) printf("SIZE EXCEEDED\n");
     instr i;
     strcpy(i.instr_name, name);
     strcpy(i.arg1, arg1);
