@@ -22,7 +22,7 @@ $(BIN): $(OBJ)
 	$(CC) $(CFLAGS) $(CPPFLAGS) $^ -o $@
 
 clean:
-	rm $(OBJ) y.tab.c y.tab.h lex.yy.c
+	rm $(OBJ) y.tab.c y.tab.h lex.yy.c 
 
 test:   all
 	./$(BIN) < test.c

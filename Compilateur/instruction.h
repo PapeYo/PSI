@@ -17,4 +17,4 @@ void print_instr(instr i, int indice);
 
 char * ti_to_string(instr i);
 char get_op_code(instr i);
-void write_from_table(instr * ti);
+void write_in_file(instr * ti);

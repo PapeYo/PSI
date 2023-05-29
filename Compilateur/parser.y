@@ -281,9 +281,9 @@ Else: tELSE {
 
 ArgCondition: tLPAR Boolean tRPAR;
 
-ForCondition: tLPAR DeclarationIndice tSEMI Boolean tSEMI Assignment tRPAR;
+ForCondition: tLPAR DeclarationIndex tSEMI Boolean tSEMI Assignment tRPAR;
 
-DeclarationIndice: Assignment | tID;
+DeclarationIndex: Assignment | tID;
 
 Boolean: Operations |  
 tID {
@@ -314,7 +314,7 @@ int main(void) {
   printf("Instruction table !\n");
   printf("--------------\n");
   print_ti(ti);
-  write_from_table(ti);
+  write_in_file(ti);
   printf("--------------\n");
   printf("Valid syntax !\n");
   printf("--------------\n");

@@ -122,10 +122,10 @@ Grammaire
 
    70 ArgCondition: tLPAR Boolean tRPAR
 
-   71 ForCondition: tLPAR DeclarationIndice tSEMI Boolean tSEMI Assignment tRPAR
+   71 ForCondition: tLPAR DeclarationIndex tSEMI Boolean tSEMI Assignment tRPAR
 
-   72 DeclarationIndice: Assignment
-   73                  | tID
+   72 DeclarationIndex: Assignment
+   73                 | tID
 
    74 Boolean: Operations
    75        | tID
@@ -296,7 +296,7 @@ Non-terminaux, suivis des règles où ils apparaissent
     ForCondition (78)
         à gauche: 71
         à droite: 64
-    DeclarationIndice (79)
+    DeclarationIndex (79)
         à gauche: 72 73
         à droite: 71
     Boolean (80)
@@ -800,12 +800,12 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 52
 
-   71 ForCondition: tLPAR . DeclarationIndice tSEMI Boolean tSEMI Assignment tRPAR
+   71 ForCondition: tLPAR . DeclarationIndex tSEMI Boolean tSEMI Assignment tRPAR
 
     tID  décalage et aller à l'état 82
 
-    Assignment         aller à l'état 83
-    DeclarationIndice  aller à l'état 84
+    Assignment        aller à l'état 83
+    DeclarationIndex  aller à l'état 84
 
 
 État 53
@@ -1103,23 +1103,23 @@ Non-terminaux, suivis des règles où ils apparaissent
 État 82
 
    58 Assignment: tID . tASSIGN RightOperand
-   73 DeclarationIndice: tID .
+   73 DeclarationIndex: tID .
 
     tASSIGN  décalage et aller à l'état 54
 
-    $défaut  réduction par utilisation de la règle 73 (DeclarationIndice)
+    $défaut  réduction par utilisation de la règle 73 (DeclarationIndex)
 
 
 État 83
 
-   72 DeclarationIndice: Assignment .
+   72 DeclarationIndex: Assignment .
 
-    $défaut  réduction par utilisation de la règle 72 (DeclarationIndice)
+    $défaut  réduction par utilisation de la règle 72 (DeclarationIndex)
 
 
 État 84
 
-   71 ForCondition: tLPAR DeclarationIndice . tSEMI Boolean tSEMI Assignment tRPAR
+   71 ForCondition: tLPAR DeclarationIndex . tSEMI Boolean tSEMI Assignment tRPAR
 
     tSEMI  décalage et aller à l'état 104
 
@@ -1534,7 +1534,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 104
 
-   71 ForCondition: tLPAR DeclarationIndice tSEMI . Boolean tSEMI Assignment tRPAR
+   71 ForCondition: tLPAR DeclarationIndex tSEMI . Boolean tSEMI Assignment tRPAR
 
     tSUB     décalage et aller à l'état 63
     tPRINTF  décalage et aller à l'état 29
@@ -1813,7 +1813,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 119
 
-   71 ForCondition: tLPAR DeclarationIndice tSEMI Boolean . tSEMI Assignment tRPAR
+   71 ForCondition: tLPAR DeclarationIndex tSEMI Boolean . tSEMI Assignment tRPAR
 
     tSEMI  décalage et aller à l'état 122
 
@@ -1834,7 +1834,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 122
 
-   71 ForCondition: tLPAR DeclarationIndice tSEMI Boolean tSEMI . Assignment tRPAR
+   71 ForCondition: tLPAR DeclarationIndex tSEMI Boolean tSEMI . Assignment tRPAR
 
     tID  décalage et aller à l'état 123
 
@@ -1850,13 +1850,13 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 124
 
-   71 ForCondition: tLPAR DeclarationIndice tSEMI Boolean tSEMI Assignment . tRPAR
+   71 ForCondition: tLPAR DeclarationIndex tSEMI Boolean tSEMI Assignment . tRPAR
 
     tRPAR  décalage et aller à l'état 125
 
 
 État 125
 
-   71 ForCondition: tLPAR DeclarationIndice tSEMI Boolean tSEMI Assignment tRPAR .
+   71 ForCondition: tLPAR DeclarationIndex tSEMI Boolean tSEMI Assignment tRPAR .
 
     $défaut  réduction par utilisation de la règle 71 (ForCondition)

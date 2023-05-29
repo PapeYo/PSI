@@ -28,8 +28,9 @@ int get_ti_size() {
 
 // prints the table instruction
 void print_ti(instr* tab) {
+    printf("Instr index - Instr Name - Argument 1 - Argument 2 - Argument 3\n");
     int i;
-    for (i=0; i < ti_size; i++) {
+    for (i = 0; i < ti_size; i++) {
         print_instr(tab[i], i);
         printf("\n");
     }
@@ -37,7 +38,7 @@ void print_ti(instr* tab) {
 
 // prints the details of an instruction structure
 void print_instr(instr i, int index) {
-    printf("%d - %s %s %s %s", index, i.instr_name, i.arg1, i.arg2, i.arg3);
+    printf("%-16d %-13s %-12s %-12s %s", index, i.instr_name, i.arg1, i.arg2, i.arg3);
 }
 
 // converts an instruction into a string
@@ -111,7 +112,7 @@ char get_op_code(instr i) {
 }
 
 // Writes the instruction table in a file named "asm.txt"
-void write_from_table(instr * ti) {
+void write_in_file(instr * ti) {
 	FILE * fPtr;
 	fPtr = fopen("asm.txt", "w");
 	if(fPtr == NULL) {
