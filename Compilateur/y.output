@@ -31,7 +31,7 @@ Grammaire
     4 Function: FunctionType FunctionName tLPAR DeclareArgs tRPAR tLBRACE Body tRBRACE
     5         | FunctionType FunctionName tLPAR DeclareArgs tRPAR tLBRACE Body Return tSEMI tRBRACE
 
-    6 Return: tRETURN RightOperand
+    6 Return: tRETURN Operand
 
     7 CallFunction: tPRINTF tLPAR tID tRPAR
     8             | FunctionName tLPAR CallArgs tRPAR
@@ -42,7 +42,7 @@ Grammaire
    11 DeclArgNext: tCOMMA DeclareArgs
    12            | %empty
 
-   13 CallArgs: RightOperand CallArgNext
+   13 CallArgs: Operand CallArgNext
    14         | %empty
 
    15 CallArgNext: tCOMMA CallArgs
@@ -76,12 +76,12 @@ Grammaire
    33 Line: Condition tLBRACE $@1 Body tRBRACE
 
    34 Declaration: VarType tID
-   35            | VarType tID tASSIGN RightOperand
+   35            | VarType tID tASSIGN Operand
 
-   36 RightOperand: CallFunction
-   37             | Operations
-   38             | tNB
-   39             | tID
+   36 Operand: CallFunction
+   37        | Operations
+   38        | tNB
+   39        | tID
 
    40 Operations: Negative
    41           | Addition
@@ -97,33 +97,33 @@ Grammaire
    51           | LowerEqual
    52           | GreaterEqual
 
-   53 Negative: tSUB RightOperand
+   53 Negative: tSUB Operand
 
-   54 Substraction: RightOperand tSUB RightOperand
+   54 Substraction: Operand tSUB Operand
 
-   55 Addition: RightOperand tADD RightOperand
+   55 Addition: Operand tADD Operand
 
-   56 Division: RightOperand tDIV RightOperand
+   56 Division: Operand tDIV Operand
 
-   57 Multiplication: RightOperand tMUL RightOperand
+   57 Multiplication: Operand tMUL Operand
 
-   58 And: RightOperand tAND RightOperand
+   58 And: Operand tAND Operand
 
-   59 Or: RightOperand tOR RightOperand
+   59 Or: Operand tOR Operand
 
-   60 Equal: RightOperand tEQ RightOperand
+   60 Equal: Operand tEQ Operand
 
-   61 Lower: RightOperand tLT RightOperand
+   61 Lower: Operand tLT Operand
 
-   62 Greater: RightOperand tGT RightOperand
+   62 Greater: Operand tGT Operand
 
-   63 Assignment: tID tASSIGN RightOperand
+   63 Assignment: tID tASSIGN Operand
 
-   64 Diff: RightOperand tNE RightOperand
+   64 Diff: Operand tNE Operand
 
-   65 LowerEqual: RightOperand tLE RightOperand
+   65 LowerEqual: Operand tLE Operand
 
-   66 GreaterEqual: RightOperand tGE RightOperand
+   66 GreaterEqual: Operand tGE Operand
 
    67 Condition: For
    68          | While
@@ -256,7 +256,7 @@ Non-terminaux, suivis des règles où ils apparaissent
     Declaration (57)
         à gauche: 34 35
         à droite: 30
-    RightOperand (58)
+    Operand (58)
         à gauche: 36 37 38 39
         à droite: 6 13 35 53 54 55 56 57 58 59 60 61 62 63 64 65 66
     Operations (59)
@@ -644,7 +644,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 État 31
 
    25 FunctionName: tID .
-   63 Assignment: tID . tASSIGN RightOperand
+   63 Assignment: tID . tASSIGN Operand
 
     tASSIGN  décalage et aller à l'état 54
 
@@ -661,7 +661,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 État 33
 
    34 Declaration: VarType . tID
-   35            | VarType . tID tASSIGN RightOperand
+   35            | VarType . tID tASSIGN Operand
 
     tID  décalage et aller à l'état 56
 
@@ -800,7 +800,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
     CallFunction    aller à l'état 68
     FunctionName    aller à l'état 34
-    RightOperand    aller à l'état 69
+    Operand         aller à l'état 69
     Operations      aller à l'état 70
     Negative        aller à l'état 71
     Substraction    aller à l'état 72
@@ -867,7 +867,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 54
 
-   63 Assignment: tID tASSIGN . RightOperand
+   63 Assignment: tID tASSIGN . Operand
 
     tSUB     décalage et aller à l'état 65
     tPRINTF  décalage et aller à l'état 29
@@ -877,7 +877,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
     CallFunction    aller à l'état 68
     FunctionName    aller à l'état 34
-    RightOperand    aller à l'état 91
+    Operand         aller à l'état 91
     Operations      aller à l'état 92
     Negative        aller à l'état 71
     Substraction    aller à l'état 72
@@ -904,7 +904,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 État 56
 
    34 Declaration: VarType tID .
-   35            | VarType tID . tASSIGN RightOperand
+   35            | VarType tID . tASSIGN Operand
 
     tASSIGN  décalage et aller à l'état 93
 
@@ -926,7 +926,7 @@ Non-terminaux, suivis des règles où ils apparaissent
     CallFunction    aller à l'état 68
     CallArgs        aller à l'état 94
     FunctionName    aller à l'état 34
-    RightOperand    aller à l'état 95
+    Operand         aller à l'état 95
     Operations      aller à l'état 92
     Negative        aller à l'état 71
     Substraction    aller à l'état 72
@@ -952,7 +952,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 59
 
-    6 Return: tRETURN . RightOperand
+    6 Return: tRETURN . Operand
 
     tSUB     décalage et aller à l'état 65
     tPRINTF  décalage et aller à l'état 29
@@ -962,7 +962,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
     CallFunction    aller à l'état 68
     FunctionName    aller à l'état 34
-    RightOperand    aller à l'état 96
+    Operand         aller à l'état 96
     Operations      aller à l'état 92
     Negative        aller à l'état 71
     Substraction    aller à l'état 72
@@ -1018,7 +1018,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 65
 
-   53 Negative: tSUB . RightOperand
+   53 Negative: tSUB . Operand
 
     tSUB     décalage et aller à l'état 65
     tPRINTF  décalage et aller à l'état 29
@@ -1028,7 +1028,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
     CallFunction    aller à l'état 68
     FunctionName    aller à l'état 34
-    RightOperand    aller à l'état 99
+    Operand         aller à l'état 99
     Operations      aller à l'état 92
     Negative        aller à l'état 71
     Substraction    aller à l'état 72
@@ -1047,44 +1047,44 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 66
 
-   38 RightOperand: tNB .
+   38 Operand: tNB .
 
-    $défaut  réduction par utilisation de la règle 38 (RightOperand)
+    $défaut  réduction par utilisation de la règle 38 (Operand)
 
 
 État 67
 
    25 FunctionName: tID .
-   39 RightOperand: tID .
+   39 Operand: tID .
    83 Boolean: tID .
 
     tLPAR     réduction par utilisation de la règle 25 (FunctionName)
     tRPAR     réduction par utilisation de la règle 83 (Boolean)
     tSEMI     réduction par utilisation de la règle 83 (Boolean)
-    $défaut  réduction par utilisation de la règle 39 (RightOperand)
+    $défaut  réduction par utilisation de la règle 39 (Operand)
 
 
 État 68
 
-   36 RightOperand: CallFunction .
+   36 Operand: CallFunction .
 
-    $défaut  réduction par utilisation de la règle 36 (RightOperand)
+    $défaut  réduction par utilisation de la règle 36 (Operand)
 
 
 État 69
 
-   54 Substraction: RightOperand . tSUB RightOperand
-   55 Addition: RightOperand . tADD RightOperand
-   56 Division: RightOperand . tDIV RightOperand
-   57 Multiplication: RightOperand . tMUL RightOperand
-   58 And: RightOperand . tAND RightOperand
-   59 Or: RightOperand . tOR RightOperand
-   60 Equal: RightOperand . tEQ RightOperand
-   61 Lower: RightOperand . tLT RightOperand
-   62 Greater: RightOperand . tGT RightOperand
-   64 Diff: RightOperand . tNE RightOperand
-   65 LowerEqual: RightOperand . tLE RightOperand
-   66 GreaterEqual: RightOperand . tGE RightOperand
+   54 Substraction: Operand . tSUB Operand
+   55 Addition: Operand . tADD Operand
+   56 Division: Operand . tDIV Operand
+   57 Multiplication: Operand . tMUL Operand
+   58 And: Operand . tAND Operand
+   59 Or: Operand . tOR Operand
+   60 Equal: Operand . tEQ Operand
+   61 Lower: Operand . tLT Operand
+   62 Greater: Operand . tGT Operand
+   64 Diff: Operand . tNE Operand
+   65 LowerEqual: Operand . tLE Operand
+   66 GreaterEqual: Operand . tGE Operand
 
     tADD  décalage et aller à l'état 100
     tSUB  décalage et aller à l'état 101
@@ -1102,12 +1102,12 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 70
 
-   37 RightOperand: Operations .
+   37 Operand: Operations .
    82 Boolean: Operations .
 
     tRPAR     réduction par utilisation de la règle 82 (Boolean)
     tSEMI     réduction par utilisation de la règle 82 (Boolean)
-    $défaut  réduction par utilisation de la règle 37 (RightOperand)
+    $défaut  réduction par utilisation de la règle 37 (Operand)
 
 
 État 71
@@ -1224,7 +1224,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 87
 
-   63 Assignment: tID . tASSIGN RightOperand
+   63 Assignment: tID . tASSIGN Operand
    81 DeclarationIndex: tID .
 
     tASSIGN  décalage et aller à l'état 54
@@ -1249,27 +1249,27 @@ Non-terminaux, suivis des règles où ils apparaissent
 État 90
 
    25 FunctionName: tID .
-   39 RightOperand: tID .
+   39 Operand: tID .
 
     tLPAR     réduction par utilisation de la règle 25 (FunctionName)
-    $défaut  réduction par utilisation de la règle 39 (RightOperand)
+    $défaut  réduction par utilisation de la règle 39 (Operand)
 
 
 État 91
 
-   54 Substraction: RightOperand . tSUB RightOperand
-   55 Addition: RightOperand . tADD RightOperand
-   56 Division: RightOperand . tDIV RightOperand
-   57 Multiplication: RightOperand . tMUL RightOperand
-   58 And: RightOperand . tAND RightOperand
-   59 Or: RightOperand . tOR RightOperand
-   60 Equal: RightOperand . tEQ RightOperand
-   61 Lower: RightOperand . tLT RightOperand
-   62 Greater: RightOperand . tGT RightOperand
-   63 Assignment: tID tASSIGN RightOperand .
-   64 Diff: RightOperand . tNE RightOperand
-   65 LowerEqual: RightOperand . tLE RightOperand
-   66 GreaterEqual: RightOperand . tGE RightOperand
+   54 Substraction: Operand . tSUB Operand
+   55 Addition: Operand . tADD Operand
+   56 Division: Operand . tDIV Operand
+   57 Multiplication: Operand . tMUL Operand
+   58 And: Operand . tAND Operand
+   59 Or: Operand . tOR Operand
+   60 Equal: Operand . tEQ Operand
+   61 Lower: Operand . tLT Operand
+   62 Greater: Operand . tGT Operand
+   63 Assignment: tID tASSIGN Operand .
+   64 Diff: Operand . tNE Operand
+   65 LowerEqual: Operand . tLE Operand
+   66 GreaterEqual: Operand . tGE Operand
 
     tADD  décalage et aller à l'état 100
     tSUB  décalage et aller à l'état 101
@@ -1289,14 +1289,14 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 92
 
-   37 RightOperand: Operations .
+   37 Operand: Operations .
 
-    $défaut  réduction par utilisation de la règle 37 (RightOperand)
+    $défaut  réduction par utilisation de la règle 37 (Operand)
 
 
 État 93
 
-   35 Declaration: VarType tID tASSIGN . RightOperand
+   35 Declaration: VarType tID tASSIGN . Operand
 
     tSUB     décalage et aller à l'état 65
     tPRINTF  décalage et aller à l'état 29
@@ -1306,7 +1306,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
     CallFunction    aller à l'état 68
     FunctionName    aller à l'état 34
-    RightOperand    aller à l'état 115
+    Operand         aller à l'état 115
     Operations      aller à l'état 92
     Negative        aller à l'état 71
     Substraction    aller à l'état 72
@@ -1332,19 +1332,19 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 95
 
-   13 CallArgs: RightOperand . CallArgNext
-   54 Substraction: RightOperand . tSUB RightOperand
-   55 Addition: RightOperand . tADD RightOperand
-   56 Division: RightOperand . tDIV RightOperand
-   57 Multiplication: RightOperand . tMUL RightOperand
-   58 And: RightOperand . tAND RightOperand
-   59 Or: RightOperand . tOR RightOperand
-   60 Equal: RightOperand . tEQ RightOperand
-   61 Lower: RightOperand . tLT RightOperand
-   62 Greater: RightOperand . tGT RightOperand
-   64 Diff: RightOperand . tNE RightOperand
-   65 LowerEqual: RightOperand . tLE RightOperand
-   66 GreaterEqual: RightOperand . tGE RightOperand
+   13 CallArgs: Operand . CallArgNext
+   54 Substraction: Operand . tSUB Operand
+   55 Addition: Operand . tADD Operand
+   56 Division: Operand . tDIV Operand
+   57 Multiplication: Operand . tMUL Operand
+   58 And: Operand . tAND Operand
+   59 Or: Operand . tOR Operand
+   60 Equal: Operand . tEQ Operand
+   61 Lower: Operand . tLT Operand
+   62 Greater: Operand . tGT Operand
+   64 Diff: Operand . tNE Operand
+   65 LowerEqual: Operand . tLE Operand
+   66 GreaterEqual: Operand . tGE Operand
 
     tADD    décalage et aller à l'état 100
     tSUB    décalage et aller à l'état 101
@@ -1367,19 +1367,19 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 96
 
-    6 Return: tRETURN RightOperand .
-   54 Substraction: RightOperand . tSUB RightOperand
-   55 Addition: RightOperand . tADD RightOperand
-   56 Division: RightOperand . tDIV RightOperand
-   57 Multiplication: RightOperand . tMUL RightOperand
-   58 And: RightOperand . tAND RightOperand
-   59 Or: RightOperand . tOR RightOperand
-   60 Equal: RightOperand . tEQ RightOperand
-   61 Lower: RightOperand . tLT RightOperand
-   62 Greater: RightOperand . tGT RightOperand
-   64 Diff: RightOperand . tNE RightOperand
-   65 LowerEqual: RightOperand . tLE RightOperand
-   66 GreaterEqual: RightOperand . tGE RightOperand
+    6 Return: tRETURN Operand .
+   54 Substraction: Operand . tSUB Operand
+   55 Addition: Operand . tADD Operand
+   56 Division: Operand . tDIV Operand
+   57 Multiplication: Operand . tMUL Operand
+   58 And: Operand . tAND Operand
+   59 Or: Operand . tOR Operand
+   60 Equal: Operand . tEQ Operand
+   61 Lower: Operand . tLT Operand
+   62 Greater: Operand . tGT Operand
+   64 Diff: Operand . tNE Operand
+   65 LowerEqual: Operand . tLE Operand
+   66 GreaterEqual: Operand . tGE Operand
 
     tADD  décalage et aller à l'état 100
     tSUB  décalage et aller à l'état 101
@@ -1440,19 +1440,19 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 99
 
-   53 Negative: tSUB RightOperand .
-   54 Substraction: RightOperand . tSUB RightOperand
-   55 Addition: RightOperand . tADD RightOperand
-   56 Division: RightOperand . tDIV RightOperand
-   57 Multiplication: RightOperand . tMUL RightOperand
-   58 And: RightOperand . tAND RightOperand
-   59 Or: RightOperand . tOR RightOperand
-   60 Equal: RightOperand . tEQ RightOperand
-   61 Lower: RightOperand . tLT RightOperand
-   62 Greater: RightOperand . tGT RightOperand
-   64 Diff: RightOperand . tNE RightOperand
-   65 LowerEqual: RightOperand . tLE RightOperand
-   66 GreaterEqual: RightOperand . tGE RightOperand
+   53 Negative: tSUB Operand .
+   54 Substraction: Operand . tSUB Operand
+   55 Addition: Operand . tADD Operand
+   56 Division: Operand . tDIV Operand
+   57 Multiplication: Operand . tMUL Operand
+   58 And: Operand . tAND Operand
+   59 Or: Operand . tOR Operand
+   60 Equal: Operand . tEQ Operand
+   61 Lower: Operand . tLT Operand
+   62 Greater: Operand . tGT Operand
+   64 Diff: Operand . tNE Operand
+   65 LowerEqual: Operand . tLE Operand
+   66 GreaterEqual: Operand . tGE Operand
 
     tLT   décalage et aller à l'état 104
     tGT   décalage et aller à l'état 105
@@ -1471,7 +1471,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 100
 
-   55 Addition: RightOperand tADD . RightOperand
+   55 Addition: Operand tADD . Operand
 
     tSUB     décalage et aller à l'état 65
     tPRINTF  décalage et aller à l'état 29
@@ -1481,7 +1481,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
     CallFunction    aller à l'état 68
     FunctionName    aller à l'état 34
-    RightOperand    aller à l'état 121
+    Operand         aller à l'état 121
     Operations      aller à l'état 92
     Negative        aller à l'état 71
     Substraction    aller à l'état 72
@@ -1500,7 +1500,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 101
 
-   54 Substraction: RightOperand tSUB . RightOperand
+   54 Substraction: Operand tSUB . Operand
 
     tSUB     décalage et aller à l'état 65
     tPRINTF  décalage et aller à l'état 29
@@ -1510,7 +1510,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
     CallFunction    aller à l'état 68
     FunctionName    aller à l'état 34
-    RightOperand    aller à l'état 122
+    Operand         aller à l'état 122
     Operations      aller à l'état 92
     Negative        aller à l'état 71
     Substraction    aller à l'état 72
@@ -1529,7 +1529,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 102
 
-   57 Multiplication: RightOperand tMUL . RightOperand
+   57 Multiplication: Operand tMUL . Operand
 
     tSUB     décalage et aller à l'état 65
     tPRINTF  décalage et aller à l'état 29
@@ -1539,7 +1539,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
     CallFunction    aller à l'état 68
     FunctionName    aller à l'état 34
-    RightOperand    aller à l'état 123
+    Operand         aller à l'état 123
     Operations      aller à l'état 92
     Negative        aller à l'état 71
     Substraction    aller à l'état 72
@@ -1558,7 +1558,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 103
 
-   56 Division: RightOperand tDIV . RightOperand
+   56 Division: Operand tDIV . Operand
 
     tSUB     décalage et aller à l'état 65
     tPRINTF  décalage et aller à l'état 29
@@ -1568,7 +1568,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
     CallFunction    aller à l'état 68
     FunctionName    aller à l'état 34
-    RightOperand    aller à l'état 124
+    Operand         aller à l'état 124
     Operations      aller à l'état 92
     Negative        aller à l'état 71
     Substraction    aller à l'état 72
@@ -1587,7 +1587,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 104
 
-   61 Lower: RightOperand tLT . RightOperand
+   61 Lower: Operand tLT . Operand
 
     tSUB     décalage et aller à l'état 65
     tPRINTF  décalage et aller à l'état 29
@@ -1597,7 +1597,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
     CallFunction    aller à l'état 68
     FunctionName    aller à l'état 34
-    RightOperand    aller à l'état 125
+    Operand         aller à l'état 125
     Operations      aller à l'état 92
     Negative        aller à l'état 71
     Substraction    aller à l'état 72
@@ -1616,7 +1616,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 105
 
-   62 Greater: RightOperand tGT . RightOperand
+   62 Greater: Operand tGT . Operand
 
     tSUB     décalage et aller à l'état 65
     tPRINTF  décalage et aller à l'état 29
@@ -1626,7 +1626,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
     CallFunction    aller à l'état 68
     FunctionName    aller à l'état 34
-    RightOperand    aller à l'état 126
+    Operand         aller à l'état 126
     Operations      aller à l'état 92
     Negative        aller à l'état 71
     Substraction    aller à l'état 72
@@ -1645,7 +1645,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 106
 
-   64 Diff: RightOperand tNE . RightOperand
+   64 Diff: Operand tNE . Operand
 
     tSUB     décalage et aller à l'état 65
     tPRINTF  décalage et aller à l'état 29
@@ -1655,7 +1655,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
     CallFunction    aller à l'état 68
     FunctionName    aller à l'état 34
-    RightOperand    aller à l'état 127
+    Operand         aller à l'état 127
     Operations      aller à l'état 92
     Negative        aller à l'état 71
     Substraction    aller à l'état 72
@@ -1674,7 +1674,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 107
 
-   60 Equal: RightOperand tEQ . RightOperand
+   60 Equal: Operand tEQ . Operand
 
     tSUB     décalage et aller à l'état 65
     tPRINTF  décalage et aller à l'état 29
@@ -1684,7 +1684,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
     CallFunction    aller à l'état 68
     FunctionName    aller à l'état 34
-    RightOperand    aller à l'état 128
+    Operand         aller à l'état 128
     Operations      aller à l'état 92
     Negative        aller à l'état 71
     Substraction    aller à l'état 72
@@ -1703,7 +1703,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 108
 
-   66 GreaterEqual: RightOperand tGE . RightOperand
+   66 GreaterEqual: Operand tGE . Operand
 
     tSUB     décalage et aller à l'état 65
     tPRINTF  décalage et aller à l'état 29
@@ -1713,7 +1713,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
     CallFunction    aller à l'état 68
     FunctionName    aller à l'état 34
-    RightOperand    aller à l'état 129
+    Operand         aller à l'état 129
     Operations      aller à l'état 92
     Negative        aller à l'état 71
     Substraction    aller à l'état 72
@@ -1732,7 +1732,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 109
 
-   65 LowerEqual: RightOperand tLE . RightOperand
+   65 LowerEqual: Operand tLE . Operand
 
     tSUB     décalage et aller à l'état 65
     tPRINTF  décalage et aller à l'état 29
@@ -1742,7 +1742,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
     CallFunction    aller à l'état 68
     FunctionName    aller à l'état 34
-    RightOperand    aller à l'état 130
+    Operand         aller à l'état 130
     Operations      aller à l'état 92
     Negative        aller à l'état 71
     Substraction    aller à l'état 72
@@ -1761,7 +1761,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 110
 
-   58 And: RightOperand tAND . RightOperand
+   58 And: Operand tAND . Operand
 
     tSUB     décalage et aller à l'état 65
     tPRINTF  décalage et aller à l'état 29
@@ -1771,7 +1771,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
     CallFunction    aller à l'état 68
     FunctionName    aller à l'état 34
-    RightOperand    aller à l'état 131
+    Operand         aller à l'état 131
     Operations      aller à l'état 92
     Negative        aller à l'état 71
     Substraction    aller à l'état 72
@@ -1790,7 +1790,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 111
 
-   59 Or: RightOperand tOR . RightOperand
+   59 Or: Operand tOR . Operand
 
     tSUB     décalage et aller à l'état 65
     tPRINTF  décalage et aller à l'état 29
@@ -1800,7 +1800,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
     CallFunction    aller à l'état 68
     FunctionName    aller à l'état 34
-    RightOperand    aller à l'état 132
+    Operand         aller à l'état 132
     Operations      aller à l'état 92
     Negative        aller à l'état 71
     Substraction    aller à l'état 72
@@ -1843,7 +1843,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
     CallFunction    aller à l'état 68
     FunctionName    aller à l'état 34
-    RightOperand    aller à l'état 69
+    Operand         aller à l'état 69
     Operations      aller à l'état 70
     Negative        aller à l'état 71
     Substraction    aller à l'état 72
@@ -1863,19 +1863,19 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 115
 
-   35 Declaration: VarType tID tASSIGN RightOperand .
-   54 Substraction: RightOperand . tSUB RightOperand
-   55 Addition: RightOperand . tADD RightOperand
-   56 Division: RightOperand . tDIV RightOperand
-   57 Multiplication: RightOperand . tMUL RightOperand
-   58 And: RightOperand . tAND RightOperand
-   59 Or: RightOperand . tOR RightOperand
-   60 Equal: RightOperand . tEQ RightOperand
-   61 Lower: RightOperand . tLT RightOperand
-   62 Greater: RightOperand . tGT RightOperand
-   64 Diff: RightOperand . tNE RightOperand
-   65 LowerEqual: RightOperand . tLE RightOperand
-   66 GreaterEqual: RightOperand . tGE RightOperand
+   35 Declaration: VarType tID tASSIGN Operand .
+   54 Substraction: Operand . tSUB Operand
+   55 Addition: Operand . tADD Operand
+   56 Division: Operand . tDIV Operand
+   57 Multiplication: Operand . tMUL Operand
+   58 And: Operand . tAND Operand
+   59 Or: Operand . tOR Operand
+   60 Equal: Operand . tEQ Operand
+   61 Lower: Operand . tLT Operand
+   62 Greater: Operand . tGT Operand
+   64 Diff: Operand . tNE Operand
+   65 LowerEqual: Operand . tLE Operand
+   66 GreaterEqual: Operand . tGE Operand
 
     tADD  décalage et aller à l'état 100
     tSUB  décalage et aller à l'état 101
@@ -1915,7 +1915,7 @@ Non-terminaux, suivis des règles où ils apparaissent
     CallFunction    aller à l'état 68
     CallArgs        aller à l'état 134
     FunctionName    aller à l'état 34
-    RightOperand    aller à l'état 95
+    Operand         aller à l'état 95
     Operations      aller à l'état 92
     Negative        aller à l'état 71
     Substraction    aller à l'état 72
@@ -1934,7 +1934,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 118
 
-   13 CallArgs: RightOperand CallArgNext .
+   13 CallArgs: Operand CallArgNext .
 
     $défaut  réduction par utilisation de la règle 13 (CallArgs)
 
@@ -1955,19 +1955,19 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 121
 
-   54 Substraction: RightOperand . tSUB RightOperand
-   55 Addition: RightOperand . tADD RightOperand
-   55         | RightOperand tADD RightOperand .
-   56 Division: RightOperand . tDIV RightOperand
-   57 Multiplication: RightOperand . tMUL RightOperand
-   58 And: RightOperand . tAND RightOperand
-   59 Or: RightOperand . tOR RightOperand
-   60 Equal: RightOperand . tEQ RightOperand
-   61 Lower: RightOperand . tLT RightOperand
-   62 Greater: RightOperand . tGT RightOperand
-   64 Diff: RightOperand . tNE RightOperand
-   65 LowerEqual: RightOperand . tLE RightOperand
-   66 GreaterEqual: RightOperand . tGE RightOperand
+   54 Substraction: Operand . tSUB Operand
+   55 Addition: Operand . tADD Operand
+   55         | Operand tADD Operand .
+   56 Division: Operand . tDIV Operand
+   57 Multiplication: Operand . tMUL Operand
+   58 And: Operand . tAND Operand
+   59 Or: Operand . tOR Operand
+   60 Equal: Operand . tEQ Operand
+   61 Lower: Operand . tLT Operand
+   62 Greater: Operand . tGT Operand
+   64 Diff: Operand . tNE Operand
+   65 LowerEqual: Operand . tLE Operand
+   66 GreaterEqual: Operand . tGE Operand
 
     tLT   décalage et aller à l'état 104
     tGT   décalage et aller à l'état 105
@@ -1986,19 +1986,19 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 122
 
-   54 Substraction: RightOperand . tSUB RightOperand
-   54             | RightOperand tSUB RightOperand .
-   55 Addition: RightOperand . tADD RightOperand
-   56 Division: RightOperand . tDIV RightOperand
-   57 Multiplication: RightOperand . tMUL RightOperand
-   58 And: RightOperand . tAND RightOperand
-   59 Or: RightOperand . tOR RightOperand
-   60 Equal: RightOperand . tEQ RightOperand
-   61 Lower: RightOperand . tLT RightOperand
-   62 Greater: RightOperand . tGT RightOperand
-   64 Diff: RightOperand . tNE RightOperand
-   65 LowerEqual: RightOperand . tLE RightOperand
-   66 GreaterEqual: RightOperand . tGE RightOperand
+   54 Substraction: Operand . tSUB Operand
+   54             | Operand tSUB Operand .
+   55 Addition: Operand . tADD Operand
+   56 Division: Operand . tDIV Operand
+   57 Multiplication: Operand . tMUL Operand
+   58 And: Operand . tAND Operand
+   59 Or: Operand . tOR Operand
+   60 Equal: Operand . tEQ Operand
+   61 Lower: Operand . tLT Operand
+   62 Greater: Operand . tGT Operand
+   64 Diff: Operand . tNE Operand
+   65 LowerEqual: Operand . tLE Operand
+   66 GreaterEqual: Operand . tGE Operand
 
     tLT   décalage et aller à l'état 104
     tGT   décalage et aller à l'état 105
@@ -2017,19 +2017,19 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 123
 
-   54 Substraction: RightOperand . tSUB RightOperand
-   55 Addition: RightOperand . tADD RightOperand
-   56 Division: RightOperand . tDIV RightOperand
-   57 Multiplication: RightOperand . tMUL RightOperand
-   57               | RightOperand tMUL RightOperand .
-   58 And: RightOperand . tAND RightOperand
-   59 Or: RightOperand . tOR RightOperand
-   60 Equal: RightOperand . tEQ RightOperand
-   61 Lower: RightOperand . tLT RightOperand
-   62 Greater: RightOperand . tGT RightOperand
-   64 Diff: RightOperand . tNE RightOperand
-   65 LowerEqual: RightOperand . tLE RightOperand
-   66 GreaterEqual: RightOperand . tGE RightOperand
+   54 Substraction: Operand . tSUB Operand
+   55 Addition: Operand . tADD Operand
+   56 Division: Operand . tDIV Operand
+   57 Multiplication: Operand . tMUL Operand
+   57               | Operand tMUL Operand .
+   58 And: Operand . tAND Operand
+   59 Or: Operand . tOR Operand
+   60 Equal: Operand . tEQ Operand
+   61 Lower: Operand . tLT Operand
+   62 Greater: Operand . tGT Operand
+   64 Diff: Operand . tNE Operand
+   65 LowerEqual: Operand . tLE Operand
+   66 GreaterEqual: Operand . tGE Operand
 
     tLT   décalage et aller à l'état 104
     tGT   décalage et aller à l'état 105
@@ -2048,19 +2048,19 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 124
 
-   54 Substraction: RightOperand . tSUB RightOperand
-   55 Addition: RightOperand . tADD RightOperand
-   56 Division: RightOperand . tDIV RightOperand
-   56         | RightOperand tDIV RightOperand .
-   57 Multiplication: RightOperand . tMUL RightOperand
-   58 And: RightOperand . tAND RightOperand
-   59 Or: RightOperand . tOR RightOperand
-   60 Equal: RightOperand . tEQ RightOperand
-   61 Lower: RightOperand . tLT RightOperand
-   62 Greater: RightOperand . tGT RightOperand
-   64 Diff: RightOperand . tNE RightOperand
-   65 LowerEqual: RightOperand . tLE RightOperand
-   66 GreaterEqual: RightOperand . tGE RightOperand
+   54 Substraction: Operand . tSUB Operand
+   55 Addition: Operand . tADD Operand
+   56 Division: Operand . tDIV Operand
+   56         | Operand tDIV Operand .
+   57 Multiplication: Operand . tMUL Operand
+   58 And: Operand . tAND Operand
+   59 Or: Operand . tOR Operand
+   60 Equal: Operand . tEQ Operand
+   61 Lower: Operand . tLT Operand
+   62 Greater: Operand . tGT Operand
+   64 Diff: Operand . tNE Operand
+   65 LowerEqual: Operand . tLE Operand
+   66 GreaterEqual: Operand . tGE Operand
 
     tLT   décalage et aller à l'état 104
     tGT   décalage et aller à l'état 105
@@ -2079,19 +2079,19 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 125
 
-   54 Substraction: RightOperand . tSUB RightOperand
-   55 Addition: RightOperand . tADD RightOperand
-   56 Division: RightOperand . tDIV RightOperand
-   57 Multiplication: RightOperand . tMUL RightOperand
-   58 And: RightOperand . tAND RightOperand
-   59 Or: RightOperand . tOR RightOperand
-   60 Equal: RightOperand . tEQ RightOperand
-   61 Lower: RightOperand . tLT RightOperand
-   61      | RightOperand tLT RightOperand .
-   62 Greater: RightOperand . tGT RightOperand
-   64 Diff: RightOperand . tNE RightOperand
-   65 LowerEqual: RightOperand . tLE RightOperand
-   66 GreaterEqual: RightOperand . tGE RightOperand
+   54 Substraction: Operand . tSUB Operand
+   55 Addition: Operand . tADD Operand
+   56 Division: Operand . tDIV Operand
+   57 Multiplication: Operand . tMUL Operand
+   58 And: Operand . tAND Operand
+   59 Or: Operand . tOR Operand
+   60 Equal: Operand . tEQ Operand
+   61 Lower: Operand . tLT Operand
+   61      | Operand tLT Operand .
+   62 Greater: Operand . tGT Operand
+   64 Diff: Operand . tNE Operand
+   65 LowerEqual: Operand . tLE Operand
+   66 GreaterEqual: Operand . tGE Operand
 
     tNE  décalage et aller à l'état 106
     tGE  décalage et aller à l'état 108
@@ -2105,19 +2105,19 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 126
 
-   54 Substraction: RightOperand . tSUB RightOperand
-   55 Addition: RightOperand . tADD RightOperand
-   56 Division: RightOperand . tDIV RightOperand
-   57 Multiplication: RightOperand . tMUL RightOperand
-   58 And: RightOperand . tAND RightOperand
-   59 Or: RightOperand . tOR RightOperand
-   60 Equal: RightOperand . tEQ RightOperand
-   61 Lower: RightOperand . tLT RightOperand
-   62 Greater: RightOperand . tGT RightOperand
-   62        | RightOperand tGT RightOperand .
-   64 Diff: RightOperand . tNE RightOperand
-   65 LowerEqual: RightOperand . tLE RightOperand
-   66 GreaterEqual: RightOperand . tGE RightOperand
+   54 Substraction: Operand . tSUB Operand
+   55 Addition: Operand . tADD Operand
+   56 Division: Operand . tDIV Operand
+   57 Multiplication: Operand . tMUL Operand
+   58 And: Operand . tAND Operand
+   59 Or: Operand . tOR Operand
+   60 Equal: Operand . tEQ Operand
+   61 Lower: Operand . tLT Operand
+   62 Greater: Operand . tGT Operand
+   62        | Operand tGT Operand .
+   64 Diff: Operand . tNE Operand
+   65 LowerEqual: Operand . tLE Operand
+   66 GreaterEqual: Operand . tGE Operand
 
     tNE  décalage et aller à l'état 106
     tGE  décalage et aller à l'état 108
@@ -2131,19 +2131,19 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 127
 
-   54 Substraction: RightOperand . tSUB RightOperand
-   55 Addition: RightOperand . tADD RightOperand
-   56 Division: RightOperand . tDIV RightOperand
-   57 Multiplication: RightOperand . tMUL RightOperand
-   58 And: RightOperand . tAND RightOperand
-   59 Or: RightOperand . tOR RightOperand
-   60 Equal: RightOperand . tEQ RightOperand
-   61 Lower: RightOperand . tLT RightOperand
-   62 Greater: RightOperand . tGT RightOperand
-   64 Diff: RightOperand . tNE RightOperand
-   64     | RightOperand tNE RightOperand .
-   65 LowerEqual: RightOperand . tLE RightOperand
-   66 GreaterEqual: RightOperand . tGE RightOperand
+   54 Substraction: Operand . tSUB Operand
+   55 Addition: Operand . tADD Operand
+   56 Division: Operand . tDIV Operand
+   57 Multiplication: Operand . tMUL Operand
+   58 And: Operand . tAND Operand
+   59 Or: Operand . tOR Operand
+   60 Equal: Operand . tEQ Operand
+   61 Lower: Operand . tLT Operand
+   62 Greater: Operand . tGT Operand
+   64 Diff: Operand . tNE Operand
+   64     | Operand tNE Operand .
+   65 LowerEqual: Operand . tLE Operand
+   66 GreaterEqual: Operand . tGE Operand
 
     tADD  décalage et aller à l'état 100
     tSUB  décalage et aller à l'état 101
@@ -2175,19 +2175,19 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 128
 
-   54 Substraction: RightOperand . tSUB RightOperand
-   55 Addition: RightOperand . tADD RightOperand
-   56 Division: RightOperand . tDIV RightOperand
-   57 Multiplication: RightOperand . tMUL RightOperand
-   58 And: RightOperand . tAND RightOperand
-   59 Or: RightOperand . tOR RightOperand
-   60 Equal: RightOperand . tEQ RightOperand
-   60      | RightOperand tEQ RightOperand .
-   61 Lower: RightOperand . tLT RightOperand
-   62 Greater: RightOperand . tGT RightOperand
-   64 Diff: RightOperand . tNE RightOperand
-   65 LowerEqual: RightOperand . tLE RightOperand
-   66 GreaterEqual: RightOperand . tGE RightOperand
+   54 Substraction: Operand . tSUB Operand
+   55 Addition: Operand . tADD Operand
+   56 Division: Operand . tDIV Operand
+   57 Multiplication: Operand . tMUL Operand
+   58 And: Operand . tAND Operand
+   59 Or: Operand . tOR Operand
+   60 Equal: Operand . tEQ Operand
+   60      | Operand tEQ Operand .
+   61 Lower: Operand . tLT Operand
+   62 Greater: Operand . tGT Operand
+   64 Diff: Operand . tNE Operand
+   65 LowerEqual: Operand . tLE Operand
+   66 GreaterEqual: Operand . tGE Operand
 
     tNE  décalage et aller à l'état 106
     tGE  décalage et aller à l'état 108
@@ -2201,19 +2201,19 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 129
 
-   54 Substraction: RightOperand . tSUB RightOperand
-   55 Addition: RightOperand . tADD RightOperand
-   56 Division: RightOperand . tDIV RightOperand
-   57 Multiplication: RightOperand . tMUL RightOperand
-   58 And: RightOperand . tAND RightOperand
-   59 Or: RightOperand . tOR RightOperand
-   60 Equal: RightOperand . tEQ RightOperand
-   61 Lower: RightOperand . tLT RightOperand
-   62 Greater: RightOperand . tGT RightOperand
-   64 Diff: RightOperand . tNE RightOperand
-   65 LowerEqual: RightOperand . tLE RightOperand
-   66 GreaterEqual: RightOperand . tGE RightOperand
-   66             | RightOperand tGE RightOperand .
+   54 Substraction: Operand . tSUB Operand
+   55 Addition: Operand . tADD Operand
+   56 Division: Operand . tDIV Operand
+   57 Multiplication: Operand . tMUL Operand
+   58 And: Operand . tAND Operand
+   59 Or: Operand . tOR Operand
+   60 Equal: Operand . tEQ Operand
+   61 Lower: Operand . tLT Operand
+   62 Greater: Operand . tGT Operand
+   64 Diff: Operand . tNE Operand
+   65 LowerEqual: Operand . tLE Operand
+   66 GreaterEqual: Operand . tGE Operand
+   66             | Operand tGE Operand .
 
     tADD  décalage et aller à l'état 100
     tSUB  décalage et aller à l'état 101
@@ -2245,19 +2245,19 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 130
 
-   54 Substraction: RightOperand . tSUB RightOperand
-   55 Addition: RightOperand . tADD RightOperand
-   56 Division: RightOperand . tDIV RightOperand
-   57 Multiplication: RightOperand . tMUL RightOperand
-   58 And: RightOperand . tAND RightOperand
-   59 Or: RightOperand . tOR RightOperand
-   60 Equal: RightOperand . tEQ RightOperand
-   61 Lower: RightOperand . tLT RightOperand
-   62 Greater: RightOperand . tGT RightOperand
-   64 Diff: RightOperand . tNE RightOperand
-   65 LowerEqual: RightOperand . tLE RightOperand
-   65           | RightOperand tLE RightOperand .
-   66 GreaterEqual: RightOperand . tGE RightOperand
+   54 Substraction: Operand . tSUB Operand
+   55 Addition: Operand . tADD Operand
+   56 Division: Operand . tDIV Operand
+   57 Multiplication: Operand . tMUL Operand
+   58 And: Operand . tAND Operand
+   59 Or: Operand . tOR Operand
+   60 Equal: Operand . tEQ Operand
+   61 Lower: Operand . tLT Operand
+   62 Greater: Operand . tGT Operand
+   64 Diff: Operand . tNE Operand
+   65 LowerEqual: Operand . tLE Operand
+   65           | Operand tLE Operand .
+   66 GreaterEqual: Operand . tGE Operand
 
     tADD  décalage et aller à l'état 100
     tSUB  décalage et aller à l'état 101
@@ -2289,19 +2289,19 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 131
 
-   54 Substraction: RightOperand . tSUB RightOperand
-   55 Addition: RightOperand . tADD RightOperand
-   56 Division: RightOperand . tDIV RightOperand
-   57 Multiplication: RightOperand . tMUL RightOperand
-   58 And: RightOperand . tAND RightOperand
-   58    | RightOperand tAND RightOperand .
-   59 Or: RightOperand . tOR RightOperand
-   60 Equal: RightOperand . tEQ RightOperand
-   61 Lower: RightOperand . tLT RightOperand
-   62 Greater: RightOperand . tGT RightOperand
-   64 Diff: RightOperand . tNE RightOperand
-   65 LowerEqual: RightOperand . tLE RightOperand
-   66 GreaterEqual: RightOperand . tGE RightOperand
+   54 Substraction: Operand . tSUB Operand
+   55 Addition: Operand . tADD Operand
+   56 Division: Operand . tDIV Operand
+   57 Multiplication: Operand . tMUL Operand
+   58 And: Operand . tAND Operand
+   58    | Operand tAND Operand .
+   59 Or: Operand . tOR Operand
+   60 Equal: Operand . tEQ Operand
+   61 Lower: Operand . tLT Operand
+   62 Greater: Operand . tGT Operand
+   64 Diff: Operand . tNE Operand
+   65 LowerEqual: Operand . tLE Operand
+   66 GreaterEqual: Operand . tGE Operand
 
     tLT  décalage et aller à l'état 104
     tGT  décalage et aller à l'état 105
@@ -2318,19 +2318,19 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 132
 
-   54 Substraction: RightOperand . tSUB RightOperand
-   55 Addition: RightOperand . tADD RightOperand
-   56 Division: RightOperand . tDIV RightOperand
-   57 Multiplication: RightOperand . tMUL RightOperand
-   58 And: RightOperand . tAND RightOperand
-   59 Or: RightOperand . tOR RightOperand
-   59   | RightOperand tOR RightOperand .
-   60 Equal: RightOperand . tEQ RightOperand
-   61 Lower: RightOperand . tLT RightOperand
-   62 Greater: RightOperand . tGT RightOperand
-   64 Diff: RightOperand . tNE RightOperand
-   65 LowerEqual: RightOperand . tLE RightOperand
-   66 GreaterEqual: RightOperand . tGE RightOperand
+   54 Substraction: Operand . tSUB Operand
+   55 Addition: Operand . tADD Operand
+   56 Division: Operand . tDIV Operand
+   57 Multiplication: Operand . tMUL Operand
+   58 And: Operand . tAND Operand
+   59 Or: Operand . tOR Operand
+   59   | Operand tOR Operand .
+   60 Equal: Operand . tEQ Operand
+   61 Lower: Operand . tLT Operand
+   62 Greater: Operand . tGT Operand
+   64 Diff: Operand . tNE Operand
+   65 LowerEqual: Operand . tLE Operand
+   66 GreaterEqual: Operand . tGE Operand
 
     tLT  décalage et aller à l'état 104
     tGT  décalage et aller à l'état 105
@@ -2377,7 +2377,7 @@ Non-terminaux, suivis des règles où ils apparaissent
 
 État 137
 
-   63 Assignment: tID . tASSIGN RightOperand
+   63 Assignment: tID . tASSIGN Operand
 
     tASSIGN  décalage et aller à l'état 54
 

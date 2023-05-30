@@ -7,12 +7,10 @@ int size = 0;
 int depth_max = 0;
 extern int yylineno;
 
-// initialize a symbol table
 symbol* init_table() {
     return malloc(SIZE*sizeof(symbol*));
 }
 
-// adds a symbol to the table
 char * add_symbol(symbol* tab, char* name, char* type, int declared_symbol) {
     if (size >= SIZE) {
         yyerror("Stack overflow\n");
@@ -27,7 +25,6 @@ char * add_symbol(symbol* tab, char* name, char* type, int declared_symbol) {
     return addr_size;
 }
 
-// deletes symbols from the symbol table
 void delete_symbol(symbol * tab) {
     int i;
     int nb = 0;
@@ -40,7 +37,6 @@ void delete_symbol(symbol * tab) {
     size -= nb;
 }
 
-// Gets symbol by its name
 symbol get_symbol(symbol* tab, char* name) {
     int i;
     for (i = 0; i < size; i++) {
@@ -61,7 +57,6 @@ symbol get_symbol(symbol* tab, char* name) {
     return s;
 }
 
-// Gets symbol address by its name
 char* get_addr(symbol* tab, char* name, int mode) {
     int i;
     for (i = 0; i < size; i++) {
@@ -89,7 +84,6 @@ char* get_addr(symbol* tab, char* name, int mode) {
     return "-1";
 }
 
-// Removes last symbol and returns the new last address
 char * pop_addr(symbol* tab) {
     if (size == 0) {exit(-1);}
     size--;
@@ -98,21 +92,12 @@ char * pop_addr(symbol* tab) {
     return addr_size;
 }
 
-// Removes last symbol and returns the new last symbol
 symbol pop_symbol(symbol* tab) {
     if (size == 0) {exit(-1);}
     size--;
     return tab[size];
 }
 
-/*
- * Checks that given symbol is correct
- * Called function rigth after depiling
- * 0 -> result_end
- * 1 -> result_condition
- * 2 -> tmp_if
-*/
-// pops a symbol from the symbol table, and returns the address of the symbol
 char * pop_check_symbol(symbol * ts, int errno) {
    symbol s = pop_symbol(ts);
    char * expected_name = malloc(20);
@@ -149,7 +134,6 @@ char * pop_check_symbol(symbol * ts, int errno) {
    return s_addr;
 }
 
-// Raises an error if trying to redefine an existing symbol
 void raise_def_error(symbol * ts, char* name) {
     if (strcmp(get_addr(ts, name, 1), "-1") != 0) {
         char * error = malloc(100);
@@ -158,7 +142,6 @@ void raise_def_error(symbol * ts, char* name) {
     }
 }
 
-// prints the symbol table
 void print_ts(symbol* tab) {
     int i;
     for (i=0; i < size; i++) {
@@ -167,7 +150,6 @@ void print_ts(symbol* tab) {
     }
 }
 
-// prints the details of a symbol
 void print_symbol(symbol s) {
     printf("Name : %-16s\t", s.var_name);
     printf("Type : %s\t", s.var_type);
@@ -175,18 +157,15 @@ void print_symbol(symbol s) {
     printf("Init : %d\t", s.init);
     printf("\n");
 }
-    
-// returns the size of the symbol table
+
 int get_table_size() {
     return size;
 }
 
-// Increases symbol table's depth by 1
 void increase_depth() {
     depth_max++;
 }
 
-// Decreases symbol table's depth by 1
 void decrease_depth() {
     depth_max-- ;
 }

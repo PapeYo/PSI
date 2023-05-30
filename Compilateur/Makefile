@@ -25,4 +25,4 @@ clean:
 	rm $(OBJ) y.tab.c y.tab.h lex.yy.c 
 
 test:   all
-	./$(BIN) < test.c
+	./$(BIN) < test3.c

@@ -10,7 +10,6 @@ instr* init_ti() {
     return malloc(SIZE*sizeof(instr));
 }
 
-// adds a new instruction to the instruction table
 void add_instr(instr* tab, char* name, char * arg1, char * arg2, char * arg3) {
     if (ti_size >= SIZE) printf("SIZE EXCEEDED\n");
     instr i;
@@ -22,12 +21,10 @@ void add_instr(instr* tab, char* name, char * arg1, char * arg2, char * arg3) {
     ti_size++;
 }
 
-// returns the instruction table size
 int get_ti_size() {
     return ti_size;
 }
 
-// prints the table instruction
 void print_ti(instr* tab) {
     printf("Instr index - Instr Name - Argument 1 - Argument 2 - Argument 3\n");
     int i;
@@ -37,12 +34,10 @@ void print_ti(instr* tab) {
     }
 }
 
-// prints the details of an instruction structure
 void print_instr(instr i, int index) {
     printf("%-16d %-13s %-12s %-12s %s", index, i.instr_name, i.arg1, i.arg2, i.arg3);
 }
 
-// converts an instruction into a string
 char * ti_to_string(instr i) {
 	char * string = malloc(100);
 	char op_code = get_op_code(i);
@@ -50,7 +45,6 @@ char * ti_to_string(instr i) {
 	return string;
 }
 
-// returns the opcode corresponding to a given instruction
 char get_op_code(instr i) {
     if (strcmp(i.instr_name, "ADD") == 0) {
         return '0' + 1; 
@@ -114,7 +108,6 @@ char get_op_code(instr i) {
     }
 }
 
-// Writes the instruction table in a file named "asm.txt"
 void write_in_file(instr * ti) {
 	FILE * fPtr;
 	fPtr = fopen("asm.txt", "w");

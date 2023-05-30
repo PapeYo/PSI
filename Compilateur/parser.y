@@ -41,7 +41,7 @@ Functions: Function | Function Functions ;
 Function: FunctionType FunctionName tLPAR DeclareArgs tRPAR tLBRACE Body tRBRACE |
           FunctionType FunctionName tLPAR DeclareArgs tRPAR tLBRACE Body Return tSEMI tRBRACE ;
 
-Return: tRETURN RightOperand {
+Return: tRETURN Operand {
     char* return_value = pop_addr(ts);
     add_instr(ti, "RET", return_value, "_", "_");
 };
@@ -54,7 +54,7 @@ DeclareArgs: VarType tID DeclArgNext |;
 
 DeclArgNext: tCOMMA DeclareArgs |;
 
-CallArgs: RightOperand CallArgNext |;
+CallArgs: Operand CallArgNext |;
 
 CallArgNext: tCOMMA CallArgs |;
 
@@ -100,7 +100,7 @@ Declaration: VarType tID {
     // raise_def_error(ts, $2);
     add_symbol(ts, $2, vartype, 0);
 } |
-VarType tID tASSIGN RightOperand {
+VarType tID tASSIGN Operand {
     char * ro = pop_addr(ts); 
     char vartype[5];
     sprintf(vartype, "%d", $1);
@@ -109,7 +109,7 @@ VarType tID tASSIGN RightOperand {
     add_instr(ti, "COP", get_addr(ts, $2, 0), ro, "_"); 
 };
 
-RightOperand: CallFunction | 
+Operand: CallFunction | 
 Operations  | 
 tNB {
     char * nb_char = malloc(3);
@@ -142,96 +142,96 @@ Operations:
   LowerEqual | 
   GreaterEqual ; 
 
-Negative: tSUB RightOperand {
+Negative: tSUB Operand {
     char * arg2 = pop_addr(ts);
     char * arg1 = add_symbol(ts, "tmp", "tmp", 0);
     add_instr(ti, "SUB", arg1, "0", arg2);
 }; 
 
-Substraction: RightOperand tSUB RightOperand {
+Substraction: Operand tSUB Operand {
     char * arg3 = pop_addr(ts);
     char * arg2 = pop_addr(ts);
     char * arg1 = add_symbol(ts, "tmp", "tmp", 0);
     add_instr(ti, "SUB", arg1, arg2, arg3);
 };
 
-Addition: RightOperand tADD RightOperand {
+Addition: Operand tADD Operand {
     char * arg3 = pop_addr(ts);
     char * arg2 = pop_addr(ts);
     char * arg1 = add_symbol(ts, "tmp", "tmp", 0);
     add_instr(ti, "ADD", arg1, arg2, arg3);
 };
 
-Division: RightOperand tDIV RightOperand {
+Division: Operand tDIV Operand {
     char * arg3 = pop_addr(ts);
     char * arg2 = pop_addr(ts);
     char * arg1 = add_symbol(ts, "tmp", "tmp", 0);
     add_instr(ti, "DIV", arg1, arg2, arg3);
 };
 
-Multiplication: RightOperand tMUL RightOperand {
+Multiplication: Operand tMUL Operand {
     char * arg3 = pop_addr(ts);
     char * arg2 = pop_addr(ts);
     char * arg1 = add_symbol(ts, "tmp", "tmp", 0);
     add_instr(ti, "MUL", arg1, arg2, arg3);
 };
 
-And: RightOperand tAND RightOperand {
+And: Operand tAND Operand {
     char * arg3 = pop_addr(ts);
     char * arg2 = pop_addr(ts);
     char * arg1 = add_symbol(ts, "tmp", "tmp", 0);
     add_instr(ti, "AND", arg1, arg2, arg3);
 };
 
-Or: RightOperand tOR RightOperand {
+Or: Operand tOR Operand {
     char * arg3 = pop_addr(ts);
     char * arg2 = pop_addr(ts);
     char * arg1 = add_symbol(ts, "tmp", "tmp", 0);
     add_instr(ti, "OR", arg1, arg2, arg3);
 };
 
-Equal: RightOperand tEQ RightOperand {
+Equal: Operand tEQ Operand {
     char * op1 = pop_addr(ts);
     char * op2 = pop_addr(ts);    
     char * result_egal = add_symbol(ts, "tmp", "result_condition", 0);
     add_instr(ti, "EQU", result_egal, op1, op2);
 };
 
-Lower: RightOperand tLT RightOperand {
+Lower: Operand tLT Operand {
     char * op1 = pop_addr(ts);
     char * op2 = pop_addr(ts);
     char * result_egal = add_symbol(ts, "tmp", "result_condition", 0);
     add_instr(ti, "LT", result_egal, op2, op1);
 };
 
-Greater: RightOperand tGT RightOperand {
+Greater: Operand tGT Operand {
     char * op1 = pop_addr(ts);
     char * op2 = pop_addr(ts);
     char * result_egal = add_symbol(ts, "tmp", "result_condition", 0);
     add_instr(ti, "GT", result_egal, op2, op1);
 };
 
-Assignment : tID tASSIGN RightOperand {
+Assignment : tID tASSIGN Operand {
     char * addr = get_addr(ts, $1, 0);
     add_instr(ti, "COP", addr, pop_addr(ts), "_");
     ts[strtol(addr, NULL, 10)].init = 1; // convertir char* en int
 };
 
-Diff: RightOperand tNE RightOperand {
+Diff: Operand tNE Operand {
     char * op1 = pop_addr(ts);
     char * op2 = pop_addr(ts);    
     char * result_egal = add_symbol(ts, "tmp", "result_condition", 0);
     add_instr(ti, "NE", result_egal, op1, op2); 
 };
 
-LowerEqual: RightOperand tLE RightOperand {
+LowerEqual: Operand tLE Operand {
     char * op1 = pop_addr(ts);
     char * op2 = pop_addr(ts);
     char * result_egal = add_symbol(ts, "tmp", "result_condition", 0);
     add_instr(ti, "LE", result_egal, op2, op1); 
 };
 
-GreaterEqual: RightOperand tGE RightOperand {
+GreaterEqual: Operand tGE Operand {
     char * op1 = pop_addr(ts);
     char * op2 = pop_addr(ts);
     char * result_egal = add_symbol(ts, "tmp", "result_condition", 0);
@@ -300,6 +300,7 @@ tID {
 };
 
 %%
+
 void yyerror(char *s) { 
     fprintf(stderr, "%s\n", s); free(s); exit(-1); }
 
