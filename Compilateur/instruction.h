@@ -1,7 +1,7 @@
 #define SIZE 1000
 
 typedef struct instr {
-    char instr_name[20];
+    char instr_name[30];
     char arg1[3];
     char arg2[3];
     char arg3[3];

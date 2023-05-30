@@ -4,7 +4,7 @@
 #include "instruction.h"
 
 int ti_size = 0;
-int REG[25];
+int REG[20];
 
 instr* init_ti() {
     return malloc(SIZE*sizeof(instr));
@@ -82,7 +82,7 @@ char get_op_code(instr i) {
     else if (strcmp(i.instr_name, "GT") == 0) {
         return '0' + 10;
     }
-    else if (strcmp(i.instr_name, "EQU") == 0) {
+    else if (strcmp(i.instr_name, "EQ") == 0) {
         return '0' + 11;
     }
     else if (strcmp(i.instr_name, "PRI") == 0) {
@@ -129,49 +129,66 @@ void write_in_file(instr * ti) {
 	}
 }
 
-void interpreter(instr *t, int tableSize) {
+void interpreter(instr *t, int ti_size) {
     int i = 0;
-    while (i < tableSize) {
+    while (i < ti_size) {
         if (strcmp(t[i].instr_name, "ADD") == 0)
             REG[atoi(t[i].arg1)] = REG[atoi(t[i].arg2 )] + REG[atoi(t[i].arg3)];
+
         else if (strcmp(t[i].instr_name, "MUL") == 0)
             REG[atoi(t[i].arg1)] = REG[atoi(t[i].arg2 )] * REG[atoi(t[i].arg3)];
+
         else if (strcmp(t[i].instr_name, "SUB") == 0)
             REG[atoi(t[i].arg1)] = REG[atoi(t[i].arg2 )] - REG[atoi(t[i].arg3)];
+
         else if (strcmp(t[i].instr_name, "DIV") == 0)
             REG[atoi(t[i].arg1)] = REG[atoi(t[i].arg2 )] / REG[atoi(t[i].arg3)];
+
         else if (strcmp(t[i].instr_name, "COP") == 0)
             REG[atoi(t[i].arg1)] = REG[atoi(t[i].arg2 )];
+
         else if (strcmp(t[i].instr_name, "AFC") == 0)
             REG[atoi(t[i].arg1)] = atoi(t[i].arg2 );
+
         else if (strcmp(t[i].instr_name, "JMP") == 0)
             i = t[i].arg1 - 1;
+
         else if (strcmp(t[i].instr_name, "JMF") == 0) {
             if (REG[atoi(t[i].arg1)] == 0)
                 i = t[i].arg2 - 1;
         }
         else if (strcmp(t[i].instr_name, "LT") == 0)
             REG[atoi(t[i].arg1)] = (REG[atoi(t[i].arg2 )] < REG[atoi(t[i].arg3)]);
+
         else if (strcmp(t[i].instr_name, "GT") == 0)
             REG[atoi(t[i].arg1)] = (REG[atoi(t[i].arg2 )] > REG[atoi(t[i].arg3)]);
-        else if (strcmp(t[i].instr_name, "EQU") == 0)
+
+        else if (strcmp(t[i].instr_name, "EQ") == 0)
             REG[atoi(t[i].arg1)] = (REG[atoi(t[i].arg2 )] == REG[atoi(t[i].arg3)]);
-        else if (strcmp(t[i].instr_name, "NE") == 0)
-            REG[atoi(t[i].arg1)] = (REG[atoi(t[i].arg2 )] != REG[atoi(t[i].arg3)]);
-        else if (strcmp(t[i].instr_name, "LE") == 0)
-            REG[atoi(t[i].arg1)] = (REG[atoi(t[i].arg2 )] <= REG[atoi(t[i].arg3)]);
-        else if (strcmp(t[i].instr_name, "GE") == 0)
-            REG[atoi(t[i].arg1)] = (REG[atoi(t[i].arg2 )] >= REG[atoi(t[i].arg3)]);
+
         else if (strcmp(t[i].instr_name, "PRI") == 0)
             printf("%d\n", REG[atoi(t[i].arg1)]);
+
         else if (strcmp(t[i].instr_name, "AND") == 0)
             REG[atoi(t[i].arg1)] = REG[atoi(t[i].arg2 )] && REG[atoi(t[i].arg3)];
+
         else if (strcmp(t[i].instr_name, "OR") == 0)
             REG[atoi(t[i].arg1)] = REG[atoi(t[i].arg2 )] || REG[atoi(t[i].arg3)];
+
         else if (strcmp(t[i].instr_name, "NOT") == 0)
             REG[atoi(t[i].arg1)] = !REG[atoi(t[i].arg2 )];
+
         else if (strcmp(t[i].instr_name, "RET") == 0)
             return;
+
+        else if (strcmp(t[i].instr_name, "NE") == 0)
+            REG[atoi(t[i].arg1)] = (REG[atoi(t[i].arg2 )] != REG[atoi(t[i].arg3)]);
+
+        else if (strcmp(t[i].instr_name, "LE") == 0)
+            REG[atoi(t[i].arg1)] = (REG[atoi(t[i].arg2 )] <= REG[atoi(t[i].arg3)]);
+
+        else if (strcmp(t[i].instr_name, "GE") == 0)
+            REG[atoi(t[i].arg1)] = (REG[atoi(t[i].arg2 )] >= REG[atoi(t[i].arg3)]);
         i++;
     }
 }

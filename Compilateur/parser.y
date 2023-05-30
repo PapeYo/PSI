@@ -42,16 +42,10 @@ Function: FunctionType FunctionName tLPAR DeclareArgs tRPAR tLBRACE Body tRBRACE
           FunctionType FunctionName tLPAR DeclareArgs tRPAR tLBRACE Body Return tSEMI tRBRACE ;
 
 Return: tRETURN RightOperand {
-    char* return_addr = add_symbol(ts, "return_value", "tmp", 0);
-    add_instr(ti, "AFC", return_addr, pop_addr(ts), "_");
-    char* end_addr = add_symbol(ts, "end_function", "tmp", 0);
-    add_instr(ti, "JMP", end_addr, "_", "_");
-    int return_instr_index = get_ti_size();
-    add_instr(ti, "RET", "_", "_", "_");
-    char return_instr_index_str[4];
-    sprintf(return_instr_index_str, "%d", return_instr_index);
-    strcpy(ti[return_instr_index].arg1, return_instr_index_str);
+    char* return_value = pop_addr(ts);
+    add_instr(ti, "RET", return_value, "_", "_");
 };
+
 
 CallFunction: tPRINTF tLPAR tID tRPAR {add_instr(ti, "PRI", get_addr(ts, $3, 0), "_", "_"); } |
     FunctionName tLPAR CallArgs tRPAR ;
@@ -86,30 +80,31 @@ Condition tLBRACE {increase_depth();} Body tRBRACE {
     decrease_depth();
     symbol tmp_condition = pop_symbol(ts);
     int jmp_index = tmp_condition.init;
-    char * ti_addr = malloc(3);
+    char* ti_addr = malloc(4);
     if (strcmp(tmp_condition.var_name, "tmp_while") == 0) {
-        sprintf(ti_addr, "%d", get_ti_size()+1); 
-        char * jmp = malloc(3);
+        sprintf(ti_addr, "%d", get_ti_size() + 1);
+        char* jmp = malloc(4); // 
         sprintf(jmp, "%d", pop_symbol(ts).init);
         add_instr(ti, "JMP", jmp, "_", "_");
-    }
-    else {
-        sprintf(ti_addr, "%d", get_ti_size()-1);
+        free(jmp);
+    } else {
+        sprintf(ti_addr, "%d", get_ti_size() - 1);
     }
     strcpy(ti[jmp_index].arg2, ti_addr);
+    free(ti_addr);
 };
 
 Declaration: VarType tID {
     char vartype[5];
     sprintf(vartype, "%d", $1);
-    raise_def_error(ts, $2);
+    // raise_def_error(ts, $2);
     add_symbol(ts, $2, vartype, 0);
 } |
 VarType tID tASSIGN RightOperand {
     char * ro = pop_addr(ts); 
     char vartype[5];
     sprintf(vartype, "%d", $1);
-    raise_def_error(ts, $2);
+    // raise_def_error(ts, $2);
     add_symbol(ts, $2, vartype, 1);
     add_instr(ti, "COP", get_addr(ts, $2, 0), ro, "_"); 
 };
@@ -327,10 +322,11 @@ int main(void) {
   printf("--------------\n");
   print_ti(ti);
   write_in_file(ti);
+  int ti_size = get_ti_size();
   printf("--------------\n");
   printf("Interpreting code \n");
   printf("--------------\n");
-  interpreter(ti,SIZE);
+  interpreter(ti, ti_size);
   printf("--------------\n");
   printf("Printing register table:\n");
   printf("--------------\n");

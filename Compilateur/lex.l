@@ -27,6 +27,7 @@ MLC           \/\*([^\*]|\*[^\/])*\*\/
 "const"       {return tCONST;}
 "void"        {return tVOID;}
 "main"        {return tMAIN;}
+{IDENTIFIERS} {strcpy(yylval.varchar, yytext); return tID;}
 {NUMBERS}     {yylval.nb = (int) strtold(yytext, NULL); return tNB;}
 [ \t\n]+      {} /* Ignore whitespace characters */
 {OLC}         {} /* Ignore one-line comments */
@@ -51,7 +52,6 @@ MLC           \/\*([^\*]|\*[^\/])*\*\/
 ")"           {return tRPAR;}
 ";"           {return tSEMI;}
 ","           {return tCOMMA;}
-{IDENTIFIERS} {strcpy(yylval.varchar, yytext); return tID;}
 .		      {return tERR;}
 
 %%

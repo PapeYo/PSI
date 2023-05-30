@@ -43,31 +43,48 @@ void delete_symbol(symbol * tab) {
 // Gets symbol by its name
 symbol get_symbol(symbol* tab, char* name) {
     int i;
-    for (i=0; i < size; i++) {
+    for (i = 0; i < size; i++) {
         if (strcmp(tab[i].var_name, name) == 0) {
             return tab[i];
         }
     }
-    char * error = malloc(100);
-    sprintf(error, "[%d] ERROR: Unknown symbol <%s>.\n", yylineno, name);
-    yyerror(error);
-    exit(-1);
+    // Variable not found, add uninitialized symbol with default value 0 to the table
+    if (size >= SIZE) {
+        yyerror("Stack overflow\n");
+    }
+    symbol s = { init: 1, depth: depth_max };
+    strcpy(s.var_name, name);
+    strcpy(s.var_type, "int");
+    s.var_value = 0;
+    tab[size] = s;
+    size++;
+    return s;
 }
 
 // Gets symbol address by its name
-char * get_addr(symbol* tab, char* name, int mode) {
+char* get_addr(symbol* tab, char* name, int mode) {
     int i;
-    for (i=0; i < size; i++) {
+    for (i = 0; i < size; i++) {
         if (strcmp(tab[i].var_name, name) == 0) {
-            char * i_addr = malloc(3);
+            char* i_addr = malloc(3);
             sprintf(i_addr, "%d", i);
             return i_addr;
         }
     }
+    if (size >= SIZE) {
+        yyerror("Stack overflow\n");
+    }
+    symbol s = { init: 1, depth: depth_max };  
+    strcpy(s.var_name, name);
+    strcpy(s.var_type, "int"); 
+    s.var_value = 0; 
+    tab[size] = s;
+    size++;
     if (mode == 0) {
-        char * error = malloc(100);
+        char* error = malloc(100);
         sprintf(error, "[%d] ERROR: Unknown symbol <%s>.\n", yylineno, name);
         yyerror(error);
+        exit(-1);
     }
     return "-1";
 }

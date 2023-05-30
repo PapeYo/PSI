@@ -5,6 +5,7 @@ typedef struct symbol {
     char var_type[16];
     int init;
     int depth;
+    int var_value;
 } symbol;
 
 void yyerror(char *s);
