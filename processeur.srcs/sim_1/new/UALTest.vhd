@@ -53,7 +53,7 @@ end COMPONENT;
 -- input
 signal test_A : std_logic_vector(7 downto 0) := "00000100";
 signal test_B : std_logic_vector(7 downto 0) := "00010000";
-signal test_opcode : std_logic_vector(2 downto 0) := "000";
+signal test_opcode : std_logic_vector(2 downto 0) := "111";
 
 -- output
 signal test_N : std_logic := '0';
@@ -78,8 +78,8 @@ Label_UAL : UAL PORT MAP (
 
 ctrl_process : process
 begin
-    wait for 10ns;
     test_opcode <= test_opcode + '1';
+    wait for 10ns;
 end process;
 
 end Behavioral;
