@@ -103,6 +103,9 @@ char get_op_code(instr i) {
     else if (strcmp(i.instr_name, "GE") == 0) {
         return '0' + 19;
     }
+    else if (strcmp(i.instr_name, "EQU") == 0) {
+        return '0' + 20;
+    }
     else {
         return '_';
     }

@@ -47,26 +47,26 @@ end UAL;
 architecture Behavioral of UAL is
 
 -- addition
-signal add : STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
-signal addCarry : STD_LOGIC_VECTOR(8 downto 0) := (others => '0');
+signal add : std_logic_vector(7 downto 0) := (others => '0');
+signal addCarry : std_logic_vector(8 downto 0) := (others => '0');
 
 -- substraction
-signal sub : STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
+signal sub : std_logic_vector(7 downto 0) := (others => '0');
 
 -- multiplication
-signal mul : STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
-signal mulCarry : STD_LOGIC_VECTOR(15 downto 0) := (others => '0');
+signal mul : std_logic_vector(7 downto 0) := (others => '0');
+signal mulCarry : std_logic_vector(15 downto 0) := (others => '0');
 
 -- division
-signal div : STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
+signal div : std_logic_vector(7 downto 0) := (others => '0');
 
 -- logic operation
-signal orS : STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
-signal andS : STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
-signal notS : STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
+signal orS : std_logic_vector(7 downto 0) := (others => '0');
+signal andS : std_logic_vector(7 downto 0) := (others => '0');
+signal notS : std_logic_vector(7 downto 0) := (others => '0');
 
 -- temporary result
-signal aux : STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
+signal aux : std_logic_vector(7 downto 0) := (others => '0');
 
 begin
     
@@ -80,8 +80,14 @@ begin
         sub <= std_logic_vector(abs(signed(A) - signed(B)));
         
         -- multiplication
-        mulCarry <= A * B;
+        mulCarry <= std_logic_vector(signed(A) * signed(B));
         mul <= mulCarry(7 downto 0);
+        if opcode = "010" then
+            report "A = " & integer'image(to_integer(signed(A)));
+            report "B = " & integer'image(to_integer(signed(B)));
+            report "Mul16 = " & integer'image(to_integer(signed(mulCarry)));
+            report "Mul8 = " & integer'image(to_integer(signed(mul)));
+        end if;
         
         -- division
         if B /= "00000000" then div <= std_logic_vector(signed(A) / signed(B));
@@ -92,6 +98,27 @@ begin
         orS <= A OR B;
         andS <= A AND B;
         notS <= NOT A;
+        
+        -- overflow handler
+        if ((mulCarry (15 downto 8) /= "00000000") and opcode = "010") then O <= '1';
+        elsif (addCarry(8) /= '0' and opcode = "001") then O <='1';
+        else O <= '0';
+        end if;
+        
+        -- negative value handler
+        if A < B and opcode = "011" then N <= '1';
+        else N <= '0';
+        end if;
+        
+        -- addition carry handler
+        if opcode = "001" then C <= addCarry(8);
+        else C <= '0';
+        end if;
+        
+        -- zero value handler
+        if aux = "00000000" then Z <= '1';
+        else Z <= '0';
+        end if;
         
         -- temporary result
         if opcode = "001" then aux <= add;
@@ -104,25 +131,8 @@ begin
         else aux <= "00000000";
         end if;
         
-        
-        if ((mulCarry (15 downto 8) /= "00") and opcode = "010") then O <= '1';
-        elsif (addCarry(8) /= '0' and opcode = "001") then O <='1';
-        else O <= '0';
-        end if;
-        
-        if A < B and opcode = "011" then N <= '1';
-        else N <= '0';
-        end if;
-        
-        if opcode = "001" then C <= addCarry(8);
-        else C <= '0';
-        end if;
-        
-        if aux = "00000000" then Z <= '1';
-        else Z <= '0';
-        end if;
-        
     end process;
+    
     S <= aux;
     
 end Behavioral;

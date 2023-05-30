@@ -21,6 +21,7 @@
 
 library IEEE;
 use IEEE.std_logic_1164.ALL;
+use std.textio.all;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -67,7 +68,7 @@ begin
     begin
         instruction <= instructions(to_integer(unsigned(addr))*32+31 downto to_integer(unsigned(addr))*32);
     end process;
-    
+
     -- TESTS
     -- AFC 0 3 _
     instructions(31 downto 0) <= x"06000300";
